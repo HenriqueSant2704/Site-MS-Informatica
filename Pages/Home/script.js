@@ -1,3 +1,4 @@
+
 //Carrossel dos card de Serviços
 let currentCard = 0;
 const cards = document.querySelectorAll('.card');
@@ -42,4 +43,80 @@ window.onload = () => {
 
   setInterval(trocarImagem, 5000); 
 };
+
+// area de Contador animado
+
+document.addEventListener('DOMContentLoaded', function() {
+    const counterElements = document.querySelectorAll('.card-status p');
+    
+    // Opções do Intersection Observer
+    const options = {
+        threshold: 0.5 // Quando 50% do elemento estiver visível
+    };
+    
+    // Criar o observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = +counter.getAttribute('data-target');
+                const parentCard = counter.closest('.card-status');
+                const spanText = parentCard.querySelector('span').textContent;
+                
+                animateCounter(counter, target, spanText);
+                observer.unobserve(counter); // Parar de observar após iniciar
+            }
+        });
+    }, options);
+    
+    // Observar cada contador
+    counterElements.forEach(counter => {
+        observer.observe(counter);
+    });
+    
+    // Função para animar o contador
+    function animateCounter(element, target, spanText) {
+        const duration = 2000; // 2 segundos
+        const startValue = 0;
+        const startTime = performance.now();
+        
+        // Verificar se é porcentagem ou se tem sinal de +
+        const isPercentage = spanText.includes('%');
+        const isPlus = spanText.includes('+');
+        
+        function updateCounter(currentTime) {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            // Usar curva de easing (cúbica)
+            const easedProgress = 1 - Math.pow(1 - progress, 3);
+            const currentValue = Math.floor(easedProgress * target);
+            
+            // Atualizar o elemento
+            if (isPercentage) {
+                element.textContent = currentValue + '%';
+            } else if (isPlus) {
+                element.textContent = '+' + currentValue;
+            } else {
+                element.textContent = currentValue;
+            }
+            
+            // Continuar a animação se não terminou
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                // Garantir o valor final exato
+                if (isPercentage) {
+                    element.textContent = target + '%';
+                } else if (isPlus) {
+                    element.textContent = '+' + target;
+                } else {
+                    element.textContent = target;
+                }
+            }
+        }
+        
+        requestAnimationFrame(updateCounter);
+    }
+});
 

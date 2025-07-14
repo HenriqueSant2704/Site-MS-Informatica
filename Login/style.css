@@ -38,13 +38,28 @@ body {
   }
 
 .registrar-container {
-  background: linear-gradient(to top, rgb(14, 14, 79), rgb(0, 0, 0));
+ position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  text-align: center; 
   background: linear-gradient(to right, rgb(29, 29, 29),rgb(0, 0, 0), rgb(0, 0, 0));
-
+  color: rgb(233, 233, 255);
 }
+
 
 .registrar-container button {
     margin-top: 30px;
+      background: linear-gradient(to bottom, rgb(0, 0, 247), rgb(2, 2, 165));
+
+  &:hover {
+  background: linear-gradient(to bottom, rgb(0, 0, 247), rgba(2, 2, 165, 0.61));
+}
 }
 
 .login-container {
