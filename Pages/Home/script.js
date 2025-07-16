@@ -22,9 +22,17 @@ document.querySelector('.btn-proximo').addEventListener('click', () => {
 document.querySelector('.btn-anterior').addEventListener('click', () => {
   currentCard = (currentCard - 1 + totalCards) % totalCards;
   updateCarousel();
+
 });
 
 updateCarousel(); 
+
+// area do outros dipo de serviços
+
+const track = document.querySelector('.carrossel-track');
+  track.innerHTML += track.innerHTML; // duplica os itens
+
+  
 
 // area de Feedback carrossel de fundo
 
@@ -43,6 +51,54 @@ window.onload = () => {
 
   setInterval(trocarImagem, 5000); 
 };
+
+// area de Feedback carrossel dos card
+
+document.addEventListener("DOMContentLoaded", () => {
+  const carrossel = document.getElementById('carrosel-feedback');
+
+  // ===== Scroll com o mouse (drag) =====
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  carrossel.addEventListener('mousedown', (e) => {
+    isDown = true;
+    carrossel.classList.add('dragging');
+    startX = e.pageX - carrossel.offsetLeft;
+    scrollLeft = carrossel.scrollLeft;
+  });
+
+  carrossel.addEventListener('mouseleave', () => {
+    isDown = false;
+    carrossel.classList.remove('dragging');
+  });
+
+  carrossel.addEventListener('mouseup', () => {
+    isDown = false;
+    carrossel.classList.remove('dragging');
+  });
+
+  carrossel.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - carrossel.offsetLeft;
+    const walk = (x - startX) * 50;
+    carrossel.scrollLeft = scrollLeft - walk;
+  });
+
+  // ===== Autoscroll automático =====
+  setInterval(() => {
+    const scrollAmount = 350; // distância de avanço
+    const maxScrollLeft = carrossel.scrollWidth - carrossel.clientWidth;
+
+    if (carrossel.scrollLeft + scrollAmount >= maxScrollLeft) {
+      carrossel.scrollLeft = 0;
+    } else {
+      carrossel.scrollLeft += scrollAmount;
+    }
+  }, 8000); 
+});
 
 // area de Contador animado
 
@@ -119,4 +175,5 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(updateCounter);
     }
 });
+
 

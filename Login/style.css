@@ -55,9 +55,12 @@ body {
 
 .registrar-container button {
     margin-top: 30px;
-      background: linear-gradient(to bottom, rgb(0, 0, 247), rgb(2, 2, 165));
+    background: linear-gradient(to bottom, rgb(0, 0, 247), rgb(2, 2, 165));
+    transition: all 0.4s ease;
+    
 
   &:hover {
+  transform: scale(1.1);
   background: linear-gradient(to bottom, rgb(0, 0, 247), rgba(2, 2, 165, 0.61));
 }
 }
@@ -107,6 +110,10 @@ button {
   cursor: pointer;
   transition: transform 80ms ease-in;
   margin-top: 80px;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .form-container button {
